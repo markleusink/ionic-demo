@@ -6,12 +6,12 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers'])
 
-.constant("appConfig", {
-        "apiEndpoint": "http://demo.linqed.eu/engage/ionic.nsf/api.xsp"
-    })
 // .constant("appConfig", {
-//         "apiEndpoint": "/api"
+//         "apiEndpoint": "http://demo.linqed.eu/engage/ionic.nsf/api.xsp"
 //     })
+.constant("appConfig", {
+        "apiEndpoint": "/api"
+    })
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

@@ -1,9 +1,17 @@
 <ion-view view-title="Users">
   <ion-content>
     <ion-list>
-      <ion-item ng-repeat="user in users" href="#/app/users/{{user.id}}">
-        {{user.title}}
-      </ion-item>
+
+    	<ion-item ng-repeat="user in users"
+        	class="item-icon-right"
+        	type="item-text-wrap" 
+        	href="#/app/users/{{user['@unid']}}">
+       		<h2>{{user.FirstName}} {{user.LastName}}</h2>
+         	<p>{{user.InternetAddress}}</p>
+
+          	<i class="icon ion-chevron-right icon-accessory"></i>
+    	</ion-item>
+
     </ion-list>
   </ion-content>
 </ion-view>
