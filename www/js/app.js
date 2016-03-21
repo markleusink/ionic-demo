@@ -6,6 +6,13 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers'])
 
+.constant("appConfig", {
+        "apiEndpoint": "http://demo.linqed.eu/engage/ionic.nsf/api.xsp"
+    })
+// .constant("appConfig", {
+//         "apiEndpoint": "/api"
+//     })
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -67,7 +74,28 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         controller: 'PlaylistCtrl'
       }
     }
-  });
+  })
+
+  .state('app.users', {
+      url: '/users',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/users.html',
+          controller: 'UsersCtrl'
+        }
+      }
+  })
+
+  .state('app.user', {
+    url: '/users/:userId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/user.html',
+        controller: 'UserCtrl'
+      }
+    }
+  })
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/playlists');
 });
