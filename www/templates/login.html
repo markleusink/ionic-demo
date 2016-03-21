@@ -20,6 +20,12 @@
           <button class="button button-block button-positive" type="submit">Log in</button>
         </label>
       </div>
+
+      <div class="padding assertive">
+        {{loginMessage}}
+      </div>
+
+      <ion-spinner ng-show="loading"></ion-spinner>
     </form>
   </ion-content>
 </ion-modal-view>

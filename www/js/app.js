@@ -6,14 +6,14 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers'])
 
-// .constant("appConfig", {
-//         "apiEndpoint": "http://demo.linqed.eu/engage/ionic.nsf/api.xsp"
-//     })
 .constant("appConfig", {
-        "apiEndpoint": "/api"
+        "apiEndpoint": "http://demo.linqed.eu/engage/ionic.nsf"
     })
+// .constant("appConfig", {
+//         "apiEndpoint": "/api"
+//     })
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $http) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -27,6 +27,9 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       StatusBar.styleDefault();
     }
   });
+
+  //always send authentication with $http requests
+  $http.defaults.withCredentials = true;
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -56,25 +59,6 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
       }
     })
-    .state('app.playlists', {
-      url: '/playlists',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
-
-  .state('app.single', {
-    url: '/playlists/:playlistId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
-      }
-    }
-  })
 
   .state('app.users', {
       url: '/users',
@@ -94,8 +78,30 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         controller: 'UserCtrl'
       }
     }
-  });
+  })
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/users');
+  $urlRouterProvider.otherwise('/app/search');
+})
+
+.factory('dominoHttpInterceptor', function ($q, $rootScope, $location) {
+    return {
+        response: function (response) {
+
+            //catch all requests to the api that return text/html: we assume that's åthe login form
+            if( (response.config.url.indexOf('api')>-1 || response.config.url.indexOf('?login') > -1)
+              && response.headers()['content-type'].indexOf("text/html")>-1) {
+              $rootScope.$broadcast('authenticate');
+              return $q.reject(response);
+            }
+         
+            return response;
+        },
+        responseError: function (response) {
+            return $q.reject(response);
+        }
+    };
+})
+.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('dominoHttpInterceptor');
 });

@@ -4,7 +4,7 @@
   "proxies": [
     {
       "path": "/api",
-      "proxyUrl": "http://demo.linqed.eu/engage/ionic.nsf/api.xsp"
+      "proxyUrl": "http://demo.linqed.eu/engage/ionic.nsf"
     }
   ]
 }
