@@ -16,6 +16,13 @@ app.factory('Users', function($http, appConfig) {
 
     },
 
+    load : function(start, count, search) {
+      return $http.get( appConfig.apiEndpoint + '/users?start=' + start + '&count=' + count)
+      .then( function success(res) {
+        return res;
+      } );
+    },
+
     get: function(userId) {
       //retrieve a single user
 
