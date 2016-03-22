@@ -1,6 +1,6 @@
 var app = angular.module('starter.controllers')
 
-.controller('UsersCtrl', function($scope, Users) {
+.controller('UsersCtrl', function($scope, $rootScope, Users) {
 
 	var numPerPage = 20;
 
@@ -9,6 +9,13 @@ var app = angular.module('starter.controllers')
 	$scope.range = {
 		start : 0
 	};
+
+	//reload the data if the change event was emitted
+	$rootScope.$on('users:changed', function() {
+	    $scope.users = [];
+	    $scope.range.start = 0;
+	    $scope.loadMore();
+	});
 
 	$scope.loadMore = function() {
 		
@@ -43,11 +50,25 @@ var app = angular.module('starter.controllers')
 
 })
 
-.controller('UserCtrl', function($scope, $stateParams, Users) {
+.controller('UserCtrl', function($scope, $stateParams, Users, $state) {
+
+	$scope.loading = false;
 
 	Users.get($stateParams.userId)
   	.then( function(res) {
     	$scope.user = res;
   	});
+
+	$scope.saveUser = function() {
+		$scope.loading = true;
+		
+		Users.save($scope.user)
+		.then( function(res) {
+			//emit event that the data has changed, return to view
+			$scope.$emit('users:changed');
+			$state.go('app.users');
+		});
+
+	};
 
 });

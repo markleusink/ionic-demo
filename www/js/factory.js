@@ -35,7 +35,14 @@ app.factory('Users', function($http, appConfig) {
         return res.data;
       });
 
-    }
+    },
+
+    save : function(user) {
+      var id = user['@unid'];
+      return $http.patch( appConfig.apiEndpoint + '/api.xsp/user/' + user['@unid'], 
+        user );
+    },
+    
     
   };
 

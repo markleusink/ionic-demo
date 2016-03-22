@@ -2,18 +2,26 @@
 <ion-content>
 
 <div class="list">
-	<label class="item item-input">
-		<span class="input-label">First name</span>
-		<input type="text" ng-model="user.FirstName">
-	</label>
-	<label class="item item-input">
-		<span class="input-label">Last name</span>
-		<input type="text" ng-model="user.LastName">
-	</label>
-	<label class="item item-input">
-		<span class="input-label">Email</span>
-		<input type="text" ng-model="user.InternetAddress">
-	</label>
+	<form ng-submit="saveUser()">
+		<label class="item item-input">
+			<span class="input-label">First name</span>
+			<input type="text" ng-model="user.FirstName">
+		</label>
+		<label class="item item-input">
+			<span class="input-label">Last name</span>
+			<input type="text" ng-model="user.LastName">
+		</label>
+		<label class="item item-input">
+			<span class="input-label">Email</span>
+			<input type="text" ng-model="user.InternetAddress">
+		</label>
+
+		<button type="submit" class="button button-full button-positive">
+		  Update details
+		</button>
+
+		 <ion-spinner class="padding" ng-show="loading"></ion-spinner>
+	</form>
 </div>
 
 </ion-content>
