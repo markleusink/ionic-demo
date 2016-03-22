@@ -42,7 +42,10 @@ app.factory('Users', function($http, appConfig) {
       return $http.patch( appConfig.apiEndpoint + '/api.xsp/user/' + user['@unid'], 
         user );
     },
-    
+
+    delete : function(id) {
+      return $http.delete( appConfig.apiEndpoint + '/api.xsp/user/' + id);
+    }
     
   };
 

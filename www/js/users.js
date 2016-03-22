@@ -48,6 +48,14 @@ var app = angular.module('starter.controllers')
 
 	};
 
+	$scope.deleteUser = function(user) {
+		Users.delete(user['@unid'])
+		.then( function() {
+			$scope.$emit('users:changed');
+		});
+
+	}
+
 })
 
 .controller('UserCtrl', function($scope, $stateParams, Users, $state) {
